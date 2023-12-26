@@ -17,15 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create();
-        $alo = User::factory()->create();
-        $project = Project::factory()->create();
-        Client::factory()->create();
-        Task::factory()->create();
-
-        $user->projects()->attach($project);
-
-        $project->users()->attach($alo);
+        
+        Client::factory(20)->create();
+        
         
     }
 }

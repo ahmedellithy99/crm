@@ -227,6 +227,29 @@ class ProjectTest extends TestCase
         
     }
 
+     /**
+     * @test
+     */
+
+    public function itCanDelete()
+    {
+        $this->withoutExceptionHandling();
+
+        $user =User::where('is_admin' , true)->get();
+
+        $this->actingAs($user[0]);
+
+        $project = Client::factory()->create();
+
+        $this->assertDatabaseHas('clients' , ['id' => $project->id]);
+
+        $response = $this->delete('clients/'.$project->id);
+
+        $this->assertModelMissing($project);
+
+    }
+
+
 
 
 

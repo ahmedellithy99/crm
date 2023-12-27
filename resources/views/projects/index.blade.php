@@ -64,7 +64,7 @@
                             <a class="btn btn-sm btn-info" href="{{ route('projects.edit', $project) }}">
                                 Edit
                             </a>
-                            @can('delete')
+                            @can('delete' , $project)
                                 <form action="{{ route('projects.destroy', $project) }}" method="POST"
                                     onsubmit="return confirm('Are your sure?');" style="display: inline-block;">
                                     <input type="hidden" name="_method" value="DELETE">

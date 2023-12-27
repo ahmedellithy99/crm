@@ -19,6 +19,17 @@ class DatabaseSeeder extends Seeder
     {
         
         Client::factory(20)->create();
+
+        Project::factory(3)->has(User::factory()->count(2))->create(['status' => Project::STATUS[1]]);
+        Project::factory(3)->has(User::factory()->count(2))->create(['status' => Project::STATUS[0]]);
+        Project::factory(3)->has(User::factory()->count(2))->create(['status' => Project::STATUS[2]]);
+
+
+        
+
+
+
+
         
         
     }

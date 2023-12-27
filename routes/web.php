@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::resource('clients' , ClientController::class)->except('show')->middleware
 // Route::put('/clients/{client}' , [ClientController::class , 'update'])->name('clients.update');
 // Route::delete('/clients/{client}' , [ClientController::class , 'destroy'])->name('clients.destroy');
 
+Route::resource('projects' , ProjectController::class);
 
 
 

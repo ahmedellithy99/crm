@@ -31,9 +31,10 @@ return new class extends Migration
         ]);
 
         User::factory()->create([
-            'name' => 'Aasdasda',
-            'email' => 'a@gmail.com',
-            'password' => '123456789'
+            'name' => 'Ahmed Mady',
+            'email' => 'ahmedmady@gmail.com',
+            'password' => '123456789',
+            
         ]);
 
     }

@@ -20,7 +20,7 @@ class ProjectFactory extends Factory
     {
         return [
             'client_id' => Client::factory(),
-            'title' => $this->faker->title,
+            'title' => $this->faker->name,
             'description' => $this->faker->paragraph,
             'deadline' => now()->addDays($this->faker->numberBetween(5,10)),
         ];

@@ -32,7 +32,7 @@ Route::resource('clients' , ClientController::class)->except('show')->middleware
 // Route::put('/clients/{client}' , [ClientController::class , 'update'])->name('clients.update');
 // Route::delete('/clients/{client}' , [ClientController::class , 'destroy'])->name('clients.destroy');
 
-Route::resource('projects' , ProjectController::class);
+Route::resource('projects' , ProjectController::class)->middleware('auth');
 
 
 

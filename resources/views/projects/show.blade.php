@@ -9,14 +9,13 @@
 
                 <div class="card-body d-flex justify-content-between">
                     <div>
-                        <div class="text-primary">{{ $project->client->contact_name }}</div>
-                        <p class="mb-0">{{ $project->client->contact_email }}</p>
-                        <p>{{ $project->client->contact_phone_number }}</p>
+                        <div class="text-primary">{{ $project->client->name }}</div>
+                        <p class="mb-0">{{ $project->client->email }}</p>
+                        <p>{{ $project->client->phone_number }}</p>
                     </div>
                     <div>
-                        <p class="mb-0">{{ $project->client->company_name }}</p>
-                        <p class="mb-0">{{ $project->client->company_address }}</p>
-                        <p class="mb-0">{{ $project->client->company_city }}, {{ $project->client->company_zip }}</p>
+                        <p class="mb-0">{{ $project->client->name }}</p>
+                        <p class="mb-0">{{ $project->client->address }}</p>
                     </div>
                 </div>
             </div>
@@ -27,9 +26,9 @@
                 <div class="card-header">Assigned user</div>
 
                 <div class="card-body">
-                    <p class="mb-0">{{ $project->user->full_name }}</p>
-                    <p class="mb-0">{{ $project->user->email }}</p>
-                    <p class="mb-0">{{ $project->user->phone_number }}</p>
+                    <p class="mb-0">{{ $project->users[0]['name'] }}</p>
+                    <p class="mb-0">{{ $project->users[0]['email'] }}</p>
+                    
                 </div>
             </div>
         </div>
@@ -55,7 +54,7 @@
                 </div>
             </div>
         </div>
-
+{{-- 
         <div class="col-md-12">
             <div class="card card-accent-primary">
                 <div class="card-header">Tasks</div>
@@ -106,7 +105,7 @@
                     @endif
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
 @endsection

@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label class="required" for="title">Title</label>
                             <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text"
-                                   name="title" id="title" value="{{ old('title', $project->title) }}" required>
+                                name="title" id="title" value="{{ old('title', $project->title) }}" >
                             @if($errors->has('title'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('title') }}
@@ -26,8 +26,8 @@
                         <div class="form-group">
                             <label class="required" for="description">Description</label>
                             <textarea class="form-control {{ $errors->has('contact_email') ? 'is-invalid' : '' }}"
-                                      rows="10" name="description"
-                                      id="description">{{ old('description', $project->description) }}</textarea>
+                                    rows="10" name="description"
+                                    id="description">{{ old('description', $project->description) }}</textarea>
                             @if($errors->has('contact_email'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('contact_email') }}
@@ -49,19 +49,22 @@
                         </div>
 
                         <div class="form-group">
+                            @can('updateUses' , $project)
                             <label for="user_id">Assigned user</label>
                             <select class="form-control {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
                                     name="user_id" id="user_id" required>
-                                @foreach($users as $id => $entry)
+                                @foreach($users as $user)
                                     <option
-                                        value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $project->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                        value="{{ $user->id }}" {{ (old('user_id') ? old('user_id') : $project->users[0]['id'] ?? '') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('user_id'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('user') }}
                                 </div>
-                            @endif
+                            @endif    
+                            @endcan
+                            
                             <span class="help-block"> </span>
                         </div>
 
@@ -69,9 +72,9 @@
                             <label for="client_id">Assigned client</label>
                             <select class="form-control {{ $errors->has('client_id') ? 'is-invalid' : '' }}"
                                     name="client_id" id="client_id" required>
-                                @foreach($clients as $id => $entry)
+                                @foreach($clients as $client)
                                     <option
-                                        value="{{ $id }}" {{ (old('client_id') ? old('client_id') : $project->client->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                        value="{{ $client->id }}" {{ (old('client_id') ? old('client_id') : $project->client->id ?? '') == $client->id ? 'selected' : '' }}>{{ $client->id }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('client_id'))
@@ -107,62 +110,5 @@
             </form>
         </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">Files</div>
-                <div class="card-body">
-                    <form action="{{ route('media.upload', ['Project', $project]) }}" method="POST"
-                          enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="form-group">
-                            <label class="required" for="file">File</label>
-                            <input class="form-control {{ $errors->has('file') ? 'is-invalid' : '' }}" type="file"
-                                   name="file" id="file">
-                            @if($errors->has('file'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('file') }}
-                                </div>
-                            @endif
-                            <span class="help-block"> </span>
-                        </div>
-
-                        <button class="btn btn-primary" type="submit">
-                            Upload
-                        </button>
-                    </form>
-
-                    <table class="table mt-4">
-                        <thead>
-                        <tr>
-                            <th scope="col">File name</th>
-                            <th scope="col">Size</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($project->getMedia() as $media)
-                            <tr>
-                                <th scope="row">{{ $media->file_name }}</th>
-                                <td>{{ $media->human_readable_size }}</td>
-                                <td>
-                                    <a class="btn btn-xs btn-info" href="{{ route('media.download', $media) }}">
-                                        Download
-                                    </a>
-                                    <form action="{{ route('media.delete', ['Project', $project, $media]) }}"
-                                          method="POST" onsubmit="return confirm('Are your sure?');"
-                                          style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
 
 @endsection

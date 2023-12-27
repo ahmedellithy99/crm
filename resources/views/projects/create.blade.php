@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label class="required" for="title">Title</label>
-                    <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title') }}" required>
+                    <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title') }}">
                     @if($errors->has('title'))
                         <div class="invalid-feedback">
                             {{ $errors->first('title') }}
@@ -44,8 +44,8 @@
                 <div class="form-group">
                     <label for="user_id">Assigned user</label>
                     <select class="form-control {{ $errors->has('user_id') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                        @foreach($users as $id => $entry)
-                            <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry->name }}</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ old('user_id') == $user ? 'selected' : '' }}>{{ $user->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('user_id'))
@@ -59,8 +59,8 @@
                 <div class="form-group">
                     <label for="client_id">Assigned client</label>
                     <select class="form-control {{ $errors->has('client_id') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
-                        @foreach($clients as $id => $entry)
-                            <option value="{{ $id }}" {{ old('client_id') == $id ? 'selected' : '' }}>{{ $entry->name }}</option>
+                        @foreach($clients as $client )
+                            <option value="{{ $client->id }}" {{ old('client_id') == $client ? 'selected' : '' }}>{{ $client->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('client_id'))

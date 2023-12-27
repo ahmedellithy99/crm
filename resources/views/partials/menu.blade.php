@@ -14,13 +14,13 @@
         </li>
     @endcan
     <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link " href="">
+        <a class="c-sidebar-nav-link " href="{{route('clients.index')}}">
             <i class="c-sidebar-nav-icon fas fa-fw fa-address-card"></i>
             Clients
         </a>
     </li>
     <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link " href="">
+        <a class="c-sidebar-nav-link " href="{{route('projects.index')}}">
             <i class="c-sidebar-nav-icon fas fa-fw fa-copy"></i>
             Projects
         </a>

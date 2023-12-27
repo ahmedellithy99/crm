@@ -18,12 +18,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         
-        Client::factory(20)->create();
+        Client::factory(5)->create();
 
-        Project::factory(3)->has(User::factory()->count(2))->create(['status' => Project::STATUS[1]]);
-        Project::factory(3)->has(User::factory()->count(2))->create(['status' => Project::STATUS[0]]);
-        Project::factory(3)->has(User::factory()->count(2))->create(['status' => Project::STATUS[2]]);
+        Project::factory(3)->has(User::factory())->create(['status' => Project::STATUS[1]]);
+        Project::factory(3)->has(User::factory())->create(['status' => Project::STATUS[0]]);
+        Project::factory(3)->has(User::factory())->create(['status' => Project::STATUS[2]]);
 
+        
 
         
 

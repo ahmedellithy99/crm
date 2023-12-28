@@ -24,7 +24,7 @@ class ProjectStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [Rule::when($this->project, 'sometimes' , 'required'), 'max:40'],
+            'title' => [Rule::when($this->project, 'sometimes' ),'required', 'max:40'],
             'description' => [Rule::when($this->project, 'sometimes'),'required' ,'max:1000'],
             'deadline' => ['required' , 'date'],
             'user_id' => ['sometimes','required', 'numeric' ,'exists:users,id'],

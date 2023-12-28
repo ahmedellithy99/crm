@@ -21,7 +21,7 @@ class TaskFactory extends Factory
         return [
             'project_id' => Project::factory(),
             'user_id' => User::factory(),
-            'title' => $this->faker->title,
+            'title' => $this->faker->jobTitle,
             'description' => $this->faker->paragraph,
             'deadline' => now()->addDays($this->faker->numberBetween(1,10))
         ];

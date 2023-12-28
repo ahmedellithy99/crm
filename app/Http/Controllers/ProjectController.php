@@ -18,10 +18,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with(['users' , 'client' , 'tasks'])
-        ->when(request('status') , fn($query) => $query->when(request('status') === 'all' , 
-        fn($query) => $query->whereIn('status' , Project::STATUS), 
-        fn($query) => $query->where('status' , request('status')))
-        )
+        ->filterStatus(request('status'))
         ->get();
 
     

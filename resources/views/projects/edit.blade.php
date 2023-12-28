@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="form-group">
-                            @can('updateUses' , $project)
+                            @can('updateUser' , $project)
                             <label for="user_id">Assigned user</label>
                             <select class="form-control {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
                                     name="user_id" id="user_id" required>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Project extends Model
 {
@@ -29,5 +31,13 @@ class Project extends Model
     public function tasks():HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function scopeFilterStatus($query , $status )
+    {
+        return $query->when($status , fn($query) => $query->when($status === 'all' , 
+        fn($query) => $query->whereIn('status' , Project::STATUS), 
+        fn($query) => $query->where('status' , $status))
+    );
     }
 }

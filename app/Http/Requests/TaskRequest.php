@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Project;
+namespace App\Http\Requests;
 
-use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Task;
 
-class ProjectStoreRequest extends FormRequest
+
+class TaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +25,12 @@ class ProjectStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [Rule::when($this->project, 'sometimes' ),'required', 'max:40'],
-            'description' => [Rule::when($this->project, 'sometimes'),'required' ,'max:1000'],
-            'deadline' => ['required' , 'date' , 'after:yesterday'],
+            'title' => [Rule::when($this->task, 'sometimes' ),'required', 'max:40'],
+            'description' => [Rule::when($this->task, 'sometimes'),'required' ,'max:1000'],
+            'deadline' => ['required' , 'date' , 'after_or_equal:today'],
             'user_id' => ['sometimes','required', 'numeric' ,'exists:users,id'],
-            'client_id' => ['required', 'numeric' ,'exists:clients,id'],
-            'status' => ['required' , Rule::in(Project::STATUS)]
+            'project_id' => ['required', 'numeric' ,'exists:projects,id'],
+            'status' => ['required' , Rule::in(Task::STATUS)]
         ];
     }
 }

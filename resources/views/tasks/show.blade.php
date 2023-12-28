@@ -5,31 +5,23 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Client</div>
+                <div class="card-header">Assigned user</div>
 
-                <div class="card-body d-flex justify-content-between">
-                    <div>
-                        <div class="text-primary">{{ $task->client->contact_name }}</div>
-                        <p class="mb-0">{{ $task->client->contact_email }}</p>
-                        <p>{{ $task->client->contact_phone_number }}</p>
-                    </div>
-                    <div>
-                        <p class="mb-0">{{ $task->client->company_name }}</p>
-                        <p class="mb-0">{{ $task->client->company_address }}</p>
-                        <p class="mb-0">{{ $task->client->company_city }}, {{ $task->client->company_zip }}</p>
-                    </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ $task->user->name }}</p>
+                    <p class="mb-0">{{ $task->user->email }}</p>
+                    <p class="mb-0">{{ $task->user->phone_number }}</p>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Assigned user</div>
+                <div class="card-header">Project</div>
 
                 <div class="card-body">
-                    <p class="mb-0">{{ $task->user->full_name }}</p>
-                    <p class="mb-0">{{ $task->user->email }}</p>
-                    <p class="mb-0">{{ $task->user->phone_number }}</p>
+                    <p class="mb-0">{{ $task->project->title }}</p>
+                    <p class="mb-0">{{ $task->project->description }}</p>
                 </div>
             </div>
         </div>

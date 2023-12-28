@@ -21,10 +21,10 @@
 
                 <div class="form-group">
                     <label class="required" for="description">Description</label>
-                    <textarea class="form-control {{ $errors->has('contact_email') ? 'is-invalid' : '' }}" rows="10" name="description" id="description">{{ old('description') }}</textarea>
-                    @if($errors->has('contact_email'))
+                    <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" rows="10" name="description" id="description">{{ old('description') }}</textarea>
+                    @if($errors->has('description'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('contact_email') }}
+                            {{ $errors->first('description') }}
                         </div>
                     @endif
                     <span class="help-block"> </span>
@@ -44,8 +44,8 @@
                 <div class="form-group">
                     <label for="user_id">Assigned user</label>
                     <select class="form-control {{ $errors->has('user_id') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                        @foreach($users as $id => $entry)
-                            <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @foreach($users as $user )
+                            <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('user_id'))
@@ -57,29 +57,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="client_id">Assigned client</label>
-                    <select class="form-control {{ $errors->has('client_id') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
-                        @foreach($clients as $id => $entry)
-                            <option value="{{ $id }}" {{ old('client_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('client_id'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('client_id') }}
-                        </div>
-                    @endif
-                    <span class="help-block"> </span>
-                </div>
-
-                <div class="form-group">
                     <label for="project_id">Assigned project</label>
                     <select class="form-control {{ $errors->has('project_id') ? 'is-invalid' : '' }}" name="project_id" id="project_id" required>
-                        @foreach($projects as $id => $entry)
-                            <option value="{{ $id }}" {{ old('project_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @foreach($projects as $project)
+                            <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>{{ $project->title }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('project_id'))
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback">  
                             {{ $errors->first('project_id') }}
                         </div>
                     @endif

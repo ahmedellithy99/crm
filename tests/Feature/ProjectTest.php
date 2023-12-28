@@ -131,7 +131,7 @@ class ProjectTest extends TestCase
     } 
 
     /**
-     * @test
+    * @test
      */
 
     public function itIsVeiwingCreate():void
@@ -165,10 +165,10 @@ class ProjectTest extends TestCase
         
         
     }
-
+    
     /**
-     * @test
-     */
+    * @test
+    */
     public function itCannotUpdateInvalidInputsProjects(): void
     {   
         // $this->withoutExceptionHandling();
@@ -227,11 +227,11 @@ class ProjectTest extends TestCase
         
     }
 
-     /**
+    /**
      * @test
      */
 
-    public function itCanDelete()
+    public function itCanDeleteProject()
     {
         $this->withoutExceptionHandling();
 
@@ -239,11 +239,11 @@ class ProjectTest extends TestCase
 
         $this->actingAs($user[0]);
 
-        $project = Client::factory()->create();
+        $project = Project::factory()->create();
 
-        $this->assertDatabaseHas('clients' , ['id' => $project->id]);
+        $this->assertDatabaseHas('projects' , ['id' => $project->id]);
 
-        $response = $this->delete('clients/'.$project->id);
+        $response = $this->delete('projects/'.$project->id);
 
         $this->assertModelMissing($project);
 

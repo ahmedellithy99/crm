@@ -27,7 +27,7 @@ class TaskTest extends TestCase
         $response->assertStatus(200);
     }
 
-     /**
+    /**
      * @test
      */
     public function itFiltersStatusForTasks(): void
@@ -38,11 +38,11 @@ class TaskTest extends TestCase
         
         $this->actingAs($user);
         
-        $project = Project::factory()->create();
+        $project = Project::factory()->create(['title' => 'aloalo']);
 
         $user = User::factory()->create(['name' => 'msa']);
         
-        Task::factory(5)->for($user)->create(['status' => 'closed']);
+        Task::factory(5)->for($user)->for($project)->create(['status' => 'closed']);
         Task::factory(2)->create();
         
         Task::factory(3)->for($project)->create(['status' => 'cancelled']);
@@ -64,9 +64,174 @@ class TaskTest extends TestCase
                 {
                     return true ;
                 }
+
+                if($task->project->title === 'aloalo')
+                {
+                    return true ;
+                }
+            }
+        });
+
+        $response->assertViewHas('tasks' , function($tasks) {
+            foreach($tasks as $task){
+                
+                if($task->project->title === 'aloalo')
+                {
+                    return true ;
+                }
             }
         });
 
     }
+
+
+    /**
+     * @test
+     */
+
+    public function itStoreTasks():void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        
+        $project = Project::factory()->create();
+        
+        // dd(now()->addDays(2)->toString());
+        $response = $this->post('/tasks' , [
+            
+            'title' => 'asdsd' ,
+            'description' => 'aloaloalo' ,
+            'deadline' => now()->addDays(2),
+            'user_id' => $user->id ,
+            'project_id' => $project->id,
+            'status' => 'closed'
+
+        ]);
+
+
+        
+        $response->assertValid();
+
+        $this->assertDatabaseHas('tasks', [
+            'status' => 'closed',
+        ]);
+        
+    } 
+
+    /**
+     * @test
+     */
+
+    public function itCannotStoreTasks():void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        
+        $project = Project::factory()->create();
+        
+        // dd(now()->addDays(2)->toString());
+        $response = $this->post('/tasks' , [
+            
+            'title' => '' ,
+            'description' => 'aloaloalo' ,
+            'deadline' => now()->addDays(2),
+            'user_id' => 10864 ,
+            'project_id' => $project->id,
+            'status' => 'opens'
+
+        ]);
+
+        $response->assertInvalid(['title' ,'status' , 'user_id']);
+    
+    } 
+
+    /**
+    * @test
+    */
+    public function itCannotUpdateInvalidInputsProjects(): void
+    {   
+        // $this->withoutExceptionHandling();
+
+        $user =User::where('is_admin' , true)->first();
+
+        $this->actingAs($user);
+
+        $task = Task::factory()->create();
+        $project = Project::factory()->create();
+        
+        
+        $response = $this->put("/tasks/$task->id" , [
+            
+            'description' => 'aloaloalo' ,
+            'deadline' => now()->addDays(2),
+            'user_id' => 13456 ,
+            'project_id' => $project->id,
+            'status' => 'opens'
+        ]);
+        
+        $response->assertInvalid(['status' , 'user_id']);
+    
+    }
+
+    /**
+     * @test
+     */
+    public function itCanUpdateTask(): void
+    {   
+        $this->withoutExceptionHandling();
+    
+
+        $user =User::where('is_admin' , true)->first();
+
+        
+        $this->actingAs($user);
+
+        $task = Task::factory()->create(['title' => 'a7a']);
+        $user = User::factory()->create();
+        $project = Project::factory()->create();
+        
+        
+        $response = $this->put("/tasks/$task->id" , [
+            'title' => 'msa',
+            'description' => 'aloaloalo' ,
+            'deadline' => now()->addDays(2),
+            'user_id' =>  $user->id,
+            'project_id' => $project->id,
+            'status' => 'closed'
+        ]);
+        
+        $response->assertValid();
+
+        $this->assertDatabaseHas('tasks' , ['status' => 'closed' , 'project_id' => $project->id , 'title' => 'msa']);
+        
+    }
+
+    /**
+     * @test
+     */
+
+    public function itCanDeleteTask()
+    {
+        $this->withoutExceptionHandling();
+
+        $user =User::where('is_admin' , true)->first();
+
+        $this->actingAs($user);
+
+        $task = Task::factory()->create();
+
+        $this->assertDatabaseHas('tasks' , ['id' => $task->id]);
+
+        $response = $this->delete('tasks/'.$task->id);
+
+        $this->assertModelMissing($task);
+
+    }
+
+
+
+
 
 }

@@ -26,14 +26,14 @@
         </a>
     </li>
     <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link " href="">
+        <a class="c-sidebar-nav-link " href="{{route('tasks.index')}}">
             <i class="c-sidebar-nav-icon fas fa-fw fa-tasks"></i>
             Tasks
         </a>
     </li>
     <li class="c-sidebar-nav-divider"></li>
     <li class="c-sidebar-nav-item mt-auto"></li>
-    <li class="c-sidebar-nav-item"><a href="{{route('tasks.index')}}" class="c-sidebar-nav-link"
+    <li class="c-sidebar-nav-item"><a href="" class="c-sidebar-nav-link"
                                     onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
             <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt"></i>
             Logout</a>

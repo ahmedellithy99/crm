@@ -24,7 +24,12 @@ class DatabaseSeeder extends Seeder
         Project::factory(3)->has(User::factory())->create(['status' => Project::STATUS[0]]);
         Project::factory(3)->has(User::factory())->create(['status' => Project::STATUS[2]]);
 
-        Task::factory(10)->create();
+        Task::factory(3)->create();
+        Task::factory(3)->create(['status' => 'closed']);
+        Task::factory(3)->create(['status' => 'in progress']);
+        Task::factory(3)->create(['status' => 'pending']);
+
+
 
         
 

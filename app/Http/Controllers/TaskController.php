@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
+use App\Models\Project;
+use App\Models\User;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+
 
 class TaskController extends Controller
 {
@@ -23,46 +28,69 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $projects = Project::all();
+        $users = User::all();
+        
+
+        return view('tasks.create' , compact('users','projects'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        //
+        $att = $request->validated();
+
+        $project = Task::create($att);
+
+        return redirect()->route('tasks.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Task $task)
     {
-        //
+        return view('tasks.show' , compact('task'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Task $task)
     {
-        //
+        $users = User::all();
+        $projects = Project::all();
+        
+        return view('tasks.edit', compact('projects', 'users', 'task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TaskRequest $request, Task $task)
     {
-        //
+        $this->authorize('updateUser' , $task);
+        
+        $att = $request->validated();
+
+
+        $task->update($att);
+
+
+        return redirect()->route("tasks.show" , $task);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        //
+        $this->authorize('delete' , $task);
+        
+        $task->delete();
+
+        return redirect()->route('tasks.index');
     }
 }

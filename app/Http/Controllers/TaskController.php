@@ -6,9 +6,11 @@ use App\Http\Requests\TaskRequest;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Task;
+use App\Notifications\TaskForUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification ;
 
 class TaskController extends Controller
 {
@@ -42,7 +44,9 @@ class TaskController extends Controller
     {
         $att = $request->validated();
 
-        $project = Task::create($att);
+        $task = Task::create($att);
+
+        Notification::send($task->user , new TaskForUser($task));
 
         return redirect()->route('tasks.index');
     }

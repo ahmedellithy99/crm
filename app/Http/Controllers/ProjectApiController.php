@@ -68,16 +68,45 @@ class ProjectApiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProjectStoreRequest $request, Project $project)
     {
-        //
+        
+        if(!auth()->user()->tokenCan('update'))
+        {
+            abort(403);
+        }
+        
+        $validated =$request->validated();
+
+
+        
+        $updated = DB::transaction(function() use ($validated , $project){
+            $project->update(Arr::except($validated , ['user_id']));
+            
+            if(isset($validated['user_id'])){
+                
+                $project->users()->sync($validated['user_id']);
+
+            }
+
+
+            return $project;
+        });
+
+        return ProjectResource::make($updated->load(['users' , 'client']));        
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
-        //
+        if(!auth()->user()->tokenCan('delete')){
+            abort(403);
+            
+        }
+
+        $project->delete();
     }
 }

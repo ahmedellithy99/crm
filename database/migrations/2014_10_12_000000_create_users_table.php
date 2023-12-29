@@ -30,12 +30,16 @@ return new class extends Migration
             'is_admin' => true,
         ]);
 
+        
+
         User::factory()->create([
             'name' => 'Ahmed Mady',
             'email' => 'ahmedmady@gmail.com',
             'password' => '123456789',
             
         ]);
+
+
 
     }
 

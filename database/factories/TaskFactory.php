@@ -16,10 +16,14 @@ class TaskFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+
     public function definition(): array
     {
+        ;
+        
         return [
-            'project_id' => Project::factory(),
+            'project_id' => Project::factory()->has(User::factory()),
             'user_id' => User::factory(),
             'title' => $this->faker->jobTitle,
             'description' => $this->faker->paragraph,

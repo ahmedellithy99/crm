@@ -74,7 +74,7 @@
                                     name="client_id" id="client_id" required>
                                 @foreach($clients as $client)
                                     <option
-                                        value="{{ $client->id }}" {{ (old('client_id') ? old('client_id') : $project->client->id ?? '') == $client->id ? 'selected' : '' }}>{{ $client->id }}</option>
+                                        value="{{ $client->id }}" {{ (old('client_id') ? old('client_id') : $project->client->id ?? '') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('client_id'))

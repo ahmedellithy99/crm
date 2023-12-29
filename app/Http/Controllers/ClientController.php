@@ -78,8 +78,13 @@ class ClientController extends Controller
     {
         
         $this->authorize('delete' , $client);
+        
 
+        foreach ($client->projects as $project ) {
+            $project->users()->detach();
+        }
         $client->delete();
+
 
         return redirect()->route('clients.index');
 

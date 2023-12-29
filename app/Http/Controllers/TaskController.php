@@ -89,6 +89,8 @@ class TaskController extends Controller
     {
         $this->authorize('delete' , $task);
         
+        // $task->project->users()->detach();
+        
         $task->delete();
 
         return redirect()->route('tasks.index');

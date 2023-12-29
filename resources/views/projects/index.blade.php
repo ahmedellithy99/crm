@@ -9,6 +9,19 @@
         </div>
     </div>
 
+    <div class="card-body">
+        <div class="d-flex justify-content-end">
+            <form action="{{ route('projects.index') }}" method="GET">
+                <div class="form-group">
+                    <label for="deleted" class="col-form-label">Show deleted:</label>
+                        <select class="form-control" name="deleted" id="deleted" onchange="this.form.submit()">
+                            <option value="false" {{ request('deleted') == 'false' ? 'selected' : '' }}>No</option>
+                            <option value="true" {{ request('deleted') == 'true' ? 'selected' : '' }}>Yes</option>
+                        </select>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="card">
         <div class="card-header">Projects list</div>
 

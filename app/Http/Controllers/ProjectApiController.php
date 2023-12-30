@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Project\ProjectStoreRequest;
+use App\Http\Requests\ProjectApiRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\User;
@@ -33,7 +33,7 @@ class ProjectApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectStoreRequest $request)
+    public function store(ProjectApiRequest $request)
     {
 
         if(!auth()->user()->tokenCan('store'))
@@ -42,15 +42,31 @@ class ProjectApiController extends Controller
         }
         $validated =$request->validated();
         
-        $project =DB::transaction(function() use ($validated){
-            $project = Project::create(Arr::except($validated , ['user_id']));
+        
+
+        
+        $project =DB::transaction(function() use ($validated , $request){
+            if(isset($validated['image'])){
+                
+                $project = Project::create(Arr::except($validated , ['user_id' , 'image']));
+                $path = $request->file('image')->store('images');
+                $project->image()->create(['path' => $path]);
+            }
+            else
+            {
+                
+                $project = Project::create(Arr::except($validated , ['user_id']));
+
+            }
             
             $project->users()->attach($validated['user_id']);
 
             return $project;
         });
 
-        return ProjectResource::make($project->load(['users' , 'client']));        
+        
+
+        return ProjectResource::make($project->load(['users' , 'client' , 'image']));        
         
     }
 
@@ -68,7 +84,7 @@ class ProjectApiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProjectStoreRequest $request, Project $project)
+    public function update(ProjectApiRequest $request, Project $project)
     {
         
         if(!auth()->user()->tokenCan('update'))

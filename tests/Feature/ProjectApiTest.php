@@ -46,12 +46,12 @@ class ProjectApiTest extends TestCase
      * @test
      */
 
-    public function itStoresProjects():void
+    public function itStoresProjectsWithoutImage():void
     {
         $user =User::factory()->create();
         $client = Client::factory()->create();
-
-        $token = $user->createToken('msamsa' , ['store'])->plainTextToken;
+    
+    $token = $user->createToken('msamsa' , ['store'])->plainTextToken;
         
         $response = $this->postJson('api/projects' , 
             [
@@ -74,6 +74,9 @@ class ProjectApiTest extends TestCase
         $this->assertDatabaseHas('projects' ,   ['status' => 'open'] );
 
     }
+
+
+
 
     /**
      * @test

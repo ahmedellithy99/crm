@@ -26,7 +26,7 @@ class ProjectApiRequest extends FormRequest
         return [
             'title' => [Rule::when($this->project, 'sometimes' ),'required', 'max:40'],
             'description' => [Rule::when($this->project, 'sometimes'),'required' ,'max:1000'],
-            'deadline' => ['required' , 'date' , 'after:yesterday'],
+            'deadline' => ['required' , 'date' , 'after:today'],
             'user_id' => ['sometimes','required', 'numeric' ,'exists:users,id'],
             'client_id' => ['required', 'numeric' ,'exists:clients,id'],
             'status' => ['required' , Rule::in(Project::STATUS)],

@@ -57,7 +57,7 @@ class ProjectApiTest extends TestCase
             [
                 'title' => 'msa' ,
                 'description' => 'aloaloaloalo',
-                'deadline' => '2023-12-31',
+                'deadline' => '2024-12-31',
                 'user_id' => $user->id ,
                 'client_id' => $client->id,
                 'status' => 'open'
@@ -125,7 +125,7 @@ class ProjectApiTest extends TestCase
         $response = $this->putJson('api/projects/'.$project->id , 
             [
                 
-                'deadline' => '2023-12-31',
+                'deadline' => '2024-12-31',
                 'user_id' => $user->id ,
                 'client_id' => $client->id,
                 'status' => Project::STATUS[2]
